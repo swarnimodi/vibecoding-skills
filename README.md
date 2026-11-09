@@ -1,12 +1,12 @@
-# coding-agent-skills
+# swarnim-skills
 
 Two portable skills for coding agents. Each is one self-contained
 `SKILL.md` with standard YAML frontmatter (`name`, `description`). The skills
 themselves need no scripts or dependencies; only the optional validator in
 `scripts/` needs Python 3 and PyYAML.
 
-Repository: <https://github.com/swarnimodi/coding-agent-skills> (default
-branch `dev`). License: [MIT](LICENSE).
+Repository: <https://github.com/swarnimodi/swarnim-skills> (default
+branch `main`). License: [MIT](LICENSE).
 
 | Skill | What it does | Default behaviour |
 | --- | --- | --- |
@@ -23,20 +23,20 @@ Fetch them somewhere outside your project, then point `SKILLS_SRC` at the
 `skills/` folder. With git:
 
 ```bash
-git clone --depth 1 --branch dev https://github.com/swarnimodi/coding-agent-skills.git
-SKILLS_SRC="$PWD/coding-agent-skills/skills"
+git clone --depth 1 --branch main https://github.com/swarnimodi/swarnim-skills.git
+SKILLS_SRC="$PWD/swarnim-skills/skills"
 ```
 
-Or without git (the archive unpacks to `coding-agent-skills-dev/`):
+Or without git (the archive unpacks to `swarnim-skills-main/`):
 
 ```bash
-curl -fsSL https://github.com/swarnimodi/coding-agent-skills/archive/refs/heads/dev.tar.gz | tar -xz
-SKILLS_SRC="$PWD/coding-agent-skills-dev/skills"
+curl -fsSL https://github.com/swarnimodi/swarnim-skills/archive/refs/heads/main.tar.gz | tar -xz
+SKILLS_SRC="$PWD/swarnim-skills-main/skills"
 ```
 
 Single files are also available directly:
-[`pristine-shipping/SKILL.md`](https://raw.githubusercontent.com/swarnimodi/coding-agent-skills/dev/skills/pristine-shipping/SKILL.md),
-[`logic-audit/SKILL.md`](https://raw.githubusercontent.com/swarnimodi/coding-agent-skills/dev/skills/logic-audit/SKILL.md).
+[`pristine-shipping/SKILL.md`](https://raw.githubusercontent.com/swarnimodi/swarnim-skills/main/skills/pristine-shipping/SKILL.md),
+[`logic-audit/SKILL.md`](https://raw.githubusercontent.com/swarnimodi/swarnim-skills/main/skills/logic-audit/SKILL.md).
 
 ### 2. Copy them where your agent looks
 
