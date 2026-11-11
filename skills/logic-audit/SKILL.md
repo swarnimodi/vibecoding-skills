@@ -45,8 +45,8 @@ earlier conversation. Check each source below and record it as **found**
   - Copilot: `.github/copilot-instructions.md`.
   - Gemini: `GEMINI.md`.
   - Windsurf: `.windsurfrules`.
-  - Any memory tool or MCP server you actually have (for example
-    Supermemory or mem0). Optional: use it only if present.
+  - Any memory tool or memory MCP you have (for example Supermemory or
+    mem0): not required, but if present always check and use it.
 - **Written rules and decisions:** docs, ADRs and decision logs, READMEs,
   specs, and comments that state a rule.
 - **Tests, schema and migrations**, and the **git log and recent commits**.

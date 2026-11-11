@@ -18,8 +18,9 @@ exist. Assume no particular agent, memory service or earlier conversation.
 Check `CLAUDE.md`, `CLAUDE.local.md` and `AGENTS.md` (root and subfolders),
 `~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md`, `.cursor/rules`,
 `.cursorrules`, `.github/copilot-instructions.md`, `GEMINI.md`,
-`.windsurfrules`, and any memory tool you actually have (optional). Then
-learn from the repo itself: README, docs, manifests, CI config, scripts
+`.windsurfrules`, and any memory tool or memory MCP you have (for example
+Supermemory or mem0): not required, but if present always check and use it.
+Then learn from the repo itself: README, docs, manifests, CI config, scripts
 and git log. Note the project's conventions, its test commands, and how it
 builds and runs. If something is not written down, infer it from the code
 and say it was inferred.
