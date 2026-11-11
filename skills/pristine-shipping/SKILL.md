@@ -11,6 +11,19 @@ the verification thorough and the claims about it honest. Apply these methods
 on any project without being asked. The user's and the project's own
 instructions take precedence over this file.
 
+## First: index the project's context
+
+Before changing anything, read whatever instruction and memory sources
+exist. Assume no particular agent, memory service or earlier conversation.
+Check `CLAUDE.md`, `CLAUDE.local.md` and `AGENTS.md` (root and subfolders),
+`~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md`, `.cursor/rules`,
+`.cursorrules`, `.github/copilot-instructions.md`, `GEMINI.md`,
+`.windsurfrules`, and any memory tool you actually have (optional). Then
+learn from the repo itself: README, docs, manifests, CI config, scripts
+and git log. Note the project's conventions, its test commands, and how it
+builds and runs. If something is not written down, infer it from the code
+and say it was inferred.
+
 ## Permission gates: never on your own
 
 - **Never commit, push, merge, deploy, release, run migrations, change shared

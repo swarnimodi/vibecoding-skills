@@ -53,7 +53,9 @@ SECRET_RULES = {
 # particular machine or on files outside its own folder.
 REFERENCE_RULES = {
     "absolute-path": re.compile(r"(?<![\w.:/])/(home|Users|root|etc|var|opt|tmp|mnt|srv)/"),
-    "home-path": re.compile(r"(?<![\w])~/"),
+    # Agents' standard user-level config folders are allowed: the skills tell
+    # the agent to read instruction files there if they exist.
+    "home-path": re.compile(r"(?<![\w])~/(?!\.claude/|\.codex/)"),
     "windows-path": re.compile(r"\b[A-Za-z]:\\"),
     "parent-dir": re.compile(r"\.\./"),
     "file-url": re.compile(r"file://"),

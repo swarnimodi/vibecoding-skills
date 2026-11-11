@@ -31,20 +31,37 @@ rules say X; is X true everywhere, for everyone, at every point in time?"**
 Every audit starts here. Do not hunt for a single hole until this index
 exists. An audit that skips it finds holes against rules it guessed.
 
-Read, and list what you read:
+Assume nothing about the setup: no particular agent, memory service or
+earlier conversation. Check each source below and record it as **found**
+(with paths) or **missing**:
 
-- **Agent memory and instruction files:** every CLAUDE.md, AGENTS.md,
-  .cursor/rules, memory folder and skill in the project.
+- **Agent instruction and memory files**, wherever they exist:
+  - Claude Code: `CLAUDE.md` at the root and in subfolders,
+    `CLAUDE.local.md`, `~/.claude/CLAUDE.md`, the project's auto-memory
+    under `~/.claude/projects/`.
+  - Codex: `AGENTS.md` at the root and in subfolders, `~/.codex/AGENTS.md`,
+    any Codex memories.
+  - Cursor: `.cursor/rules`, `.cursorrules`.
+  - Copilot: `.github/copilot-instructions.md`.
+  - Gemini: `GEMINI.md`.
+  - Windsurf: `.windsurfrules`.
+  - Any memory tool or MCP server you actually have (for example
+    Supermemory or mem0). Optional: use it only if present.
 - **Written rules and decisions:** docs, ADRs and decision logs, READMEs,
   specs, and comments that state a rule.
+- **Tests, schema and migrations**, and the **git log and recent commits**.
 - **The code itself:** entry points, routes and handlers, data models and
   schema, migrations, jobs and cron, roles, permissions and flags, and every
   reader and writer of each key entity.
 
 From that index, write two things:
 
-- **A rules inventory:** each stated rule with its source (file:line, or
-  "user, date"). It seeds the rules ledger in section 2.
+- **A rules inventory:** each rule with its source (file:line, or
+  "user, date") and a label: **stated** (written down somewhere) or
+  **inferred**. It seeds the rules ledger in section 2.
+  - If there is little or no written context, infer rules from code, tests,
+    schema, naming and git history, and label each one "inferred". Carry
+    the label into every finding that relies on it.
 - **An enforcement map:** for each rule, every place it should be enforced.
   The hunt then checks each of those places.
 
@@ -59,10 +76,10 @@ what it says.
 
 You cannot find a hole without the rule it breaks. Collect rules from:
 
-- The project's instruction files: AGENTS.md, CLAUDE.md, README, docs/,
+- The instruction and memory files found in section 1, README, docs/,
   ADRs, plan and ledger files, and any "decisions" sections.
-- The user's decisions: this conversation, issue threads, and any notes the
-  user points you to. **The newest decision wins.** Note every place older
+- The user's decisions: what the user tells you, issue threads, and any
+  notes the user points you to. **The newest decision wins.** Note every place older
   text contradicts it.
 - The schema and code: CHECK constraints, policies, comments that state an
   invariant ("only admins may…", "never…", "always…").
@@ -142,7 +159,8 @@ Cross-cutting checks on every finding's path:
 
 Every finding needs:
 
-- the **rule**, quoted with its source from the index;
+- the **rule**, quoted with its source from the index, labelled stated or
+  inferred;
 - the **hole**, with file:line for each path that breaks it;
 - a **concrete scenario**: steps a real person or job could take that hit it;
 - a check that it is **not an accepted exception** and not overridden by a
@@ -191,8 +209,8 @@ will report or act on, yourself, against the code.
 
 - **Coverage:** every rule and surface checked, including the ones found
   consistent, so the reader can see what was covered.
-- **Index gaps:** every piece of context you could not read, and what that
-  leaves unverified.
+- **Index:** each source checked, found or missing, plus every piece of
+  context you could not read and what that leaves unverified.
 - **Findings:** ranked by severity.
 - **Decisions only the user can take:** a short list, each with a
   recommendation.
