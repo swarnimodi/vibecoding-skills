@@ -19,14 +19,43 @@ rules say X; is X true everywhere, for everyone, at every point in time?"**
   data, configuration, schemas or docs, and do not commit, push, deploy or
   run migrations.
 - **Fixing is a separate, permissioned step.** Start it only after the user
-  explicitly approves which findings to fix (see section 6). "Find the holes"
+  explicitly approves which findings to fix (see section 7). "Find the holes"
   is not permission to fix them; "find and plug the holes" is permission to
   propose fixes, and anything consequential (data writes, migrations,
   deploys, merges) still needs its own explicit go.
 - **Never touch production to prove a hole,** and never copy production data
   or secrets into an audit environment, a report or a prompt.
 
-## 1. Build the rules ledger first (the oracle)
+## 1. Index all the context first (mandatory)
+
+Every audit starts here. Do not hunt for a single hole until this index
+exists. An audit that skips it finds holes against rules it guessed.
+
+Read, and list what you read:
+
+- **Agent memory and instruction files:** every CLAUDE.md, AGENTS.md,
+  .cursor/rules, memory folder and skill in the project.
+- **Written rules and decisions:** docs, ADRs and decision logs, READMEs,
+  specs, and comments that state a rule.
+- **The code itself:** entry points, routes and handlers, data models and
+  schema, migrations, jobs and cron, roles, permissions and flags, and every
+  reader and writer of each key entity.
+
+From that index, write two things:
+
+- **A rules inventory:** each stated rule with its source (file:line, or
+  "user, date"). It seeds the rules ledger in section 2.
+- **An enforcement map:** for each rule, every place it should be enforced.
+  The hunt then checks each of those places.
+
+Only then start the audit. Every finding cites its rule's source from this
+index; an implied rule cites the stated rules it follows from.
+
+**Name what you could not read.** If some context is missing, unreadable,
+too large or off limits, list it as an index gap in the report. Do not guess
+what it says.
+
+## 2. Build the rules ledger (the oracle)
 
 You cannot find a hole without the rule it breaks. Collect rules from:
 
@@ -51,7 +80,7 @@ Accepted exceptions ("by decision", "accepted", "known limitation") are
 part of the ledger. They are not holes unless a newer decision overrides
 them.
 
-## 2. Map the model
+## 3. Map the model
 
 - **Actors.** Include the awkward ones: signed out, anonymous or guest
   session, half-onboarded (applied, invited, unverified), on hold, rejected,
@@ -67,7 +96,7 @@ them.
 - **Readers.** For each derived fact (a count, "is paid", "is open", "who is
   coming", "is a host"), list every place that computes it.
 
-## 3. Hunt: the eight kinds of hole
+## 4. Hunt: the eight kinds of hole
 
 1. **A rule that is not enforced on every path.** It is enforced on path A
    but a sibling path B reaches the same state without it: another action,
@@ -109,11 +138,11 @@ Cross-cutting checks on every finding's path:
 - **Failure:** a failed read must never look like an empty or zero result
   that the system then acts on.
 
-## 4. Verify before reporting
+## 5. Verify before reporting
 
 Every finding needs:
 
-- the **rule**, quoted with its source;
+- the **rule**, quoted with its source from the index;
 - the **hole**, with file:line for each path that breaks it;
 - a **concrete scenario**: steps a real person or job could take that hit it;
 - a check that it is **not an accepted exception** and not overridden by a
@@ -131,14 +160,14 @@ against a shared non-production environment need the user's permission.
 Never write to production to prove a hole. Speculation you did not trace is
 not a finding.
 
-## 5. Fan out when the system is large
+## 6. Fan out when the system is large
 
 If your agent can run subagents or parallel workers, split by domain, for
 example roles and access, money and entitlements, the core object's
 lifecycle, identity and privacy, public surfaces and flags, and admin
 tooling. Give every auditor one shared brief:
 
-- the rules ledger and the newest decisions;
+- the index, enforcement map, rules ledger and newest decisions;
 - the eight kinds;
 - what not to report;
 - the finding format above;
@@ -156,12 +185,14 @@ in the same order.
 A subagent's report is a lead, not a verdict. Re-verify every finding you
 will report or act on, yourself, against the code.
 
-## 6. Report, then fix only with permission
+## 7. Report, then fix only with permission
 
 **Report**, in this order:
 
 - **Coverage:** every rule and surface checked, including the ones found
   consistent, so the reader can see what was covered.
+- **Index gaps:** every piece of context you could not read, and what that
+  leaves unverified.
 - **Findings:** ranked by severity.
 - **Decisions only the user can take:** a short list, each with a
   recommendation.
